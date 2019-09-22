@@ -29,12 +29,11 @@ class SlotOperation {
                     return slotfound;
             }
         }
+        if(!slotfound)System.out.println("Car Park full could not park "+carnoplate);
         return false;
     }
 
-    public boolean UnParkCar(String carnoplate) {
-        //return 1 if car found and unparked
-        //return 0 if car not found
+    public boolean UnParkCarByPlate(String carnoplate) {
         Boolean slotfound = false;
         Boolean unparkedcar =false;
         for (int i = 0; i < 10; i++) {
@@ -45,6 +44,22 @@ class SlotOperation {
                 unparkedcar=true;
             }
         }
+        if(!slotfound) System.out.println("car with "+carnoplate+ " licence plate not found in parking !");
+        return unparkedcar;        
+    }
+    
+    public boolean UnParkCarByTicketNumber(int ticketnum) {
+        Boolean slotfound = false;
+        Boolean unparkedcar =false;
+        for (int i = 0; i < 10; i++) {
+            if (slot[i].getTicketNumber()==ticketnum) {
+                slotfound = true;
+                slot[i].setLicencePlate("");
+                slot[i].setTicketNumber(0);
+                unparkedcar=true;
+            }
+        }
+        if(!slotfound) System.out.println("car with "+ticketnum+ " Ticket number not found in parking !");
         return unparkedcar;        
     }
 
@@ -57,6 +72,24 @@ class SlotOperation {
     }
     
     public void compact(){
-        
+    	slot tmpslot[] = new slot[slotsize];
+    	for(int i=0;i<slotsize;i++){
+    		tmpslot[i]=new slot();
+            tmpslot[i].setLicencePlate("");
+            tmpslot[i].setTicketNumber(0);            
+        }
+    	    	
+    	int j=0;
+    	for (int i = 0; i < 10; i++) {
+    		if(slot[i].getLicencePlate().length()>0)
+    			tmpslot[j++].setLicencePlate(slot[i].getLicencePlate());
+        }
+    	
+    	initialise();
+    	
+    	for (int i = 0; i < 10; i++) {
+    		slot[i].setLicencePlate(tmpslot[i].getLicencePlate());
+        }
+    	
     }
 }

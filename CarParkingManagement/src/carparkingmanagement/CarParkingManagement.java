@@ -28,7 +28,7 @@ public class CarParkingManagement {
             System.exit(0);
         }
         if (input.endsWith(",")) {
-            return "Input is incomplete. Please remove ',' from the end.";
+            return "Invalid input. Please remove ',' from the end ";
         } else if (input.isEmpty()) {
             return "Empty input.";
         } else {
@@ -39,13 +39,20 @@ public class CarParkingManagement {
                         slotmanager.ParkCar(s.substring(1), ticketNumber);
                         ticketNumber++;
                         break;
-                    case 'u':         
-                        if(!slotmanager.UnParkCar(s.substring(1)))
-                           System.out.println(s.substring(1) +" Car can not found in parking! ");
+                    case 'u': 
+                    	int ticketnum;
+                    	try {ticketnum= Integer.parseInt(s.substring(1));
+                        slotmanager.UnParkCarByTicketNumber(ticketnum);  
+                    	}catch(java.lang.NumberFormatException e) {
+                    		System.out.println("non numeric ticket number :("+s.substring(1)+")");
+                    	}
                         break;
                     case 'c':
                         slotmanager.compact();
                         break;
+                    default:
+                    	System.out.println("Invalid input. Input shoud startwith p/u/c");
+                    	break;
                 }
             }
             return slotmanager.printSlot(); // carParkService.getCurrentParkingOrder();
